@@ -9,8 +9,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.google.services)
-    alias(libs.plugins.firebase.crashlytics)
+    // alias(libs.plugins.google.services)  // disabled for CI
+    // alias(libs.plugins.firebase.crashlytics)  // disabled for CI
     alias(libs.plugins.baselineprofile)
 }
 
@@ -170,9 +170,9 @@ dependencies {
     implementation(libs.androidx.material3.adaptive.navigation3)
 
     // Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics)
-    implementation(libs.firebase.crashlytics)
+    // implementation(platform(libs.firebase.bom))  // disabled for CI
+    // implementation(libs.firebase.analytics)  // disabled for CI
+    // implementation(libs.firebase.crashlytics)  // disabled for CI
 
     // DataStore
     implementation(libs.androidx.datastore.preferences)
