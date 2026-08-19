@@ -147,6 +147,10 @@ val dataSourceModule = module {
     }
 
     single {
+        get<AppDatabase>().knowledgeDao()
+    }
+
+    single {
         MessageFtsManager(get())
     }
 
@@ -157,7 +161,8 @@ val dataSourceModule = module {
             context = get(),
             providerManager = get(),
             json = get(),
-            memoryRepo = get()
+            memoryRepo = get(),
+            knowledgeRepo = getOrNull()
         )
     }
 

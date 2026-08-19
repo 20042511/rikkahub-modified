@@ -39,12 +39,14 @@ import java.io.File
 import me.rerere.rikkahub.data.ai.transformers.onGenerationFinish
 import me.rerere.rikkahub.data.ai.transformers.transforms
 import me.rerere.rikkahub.data.ai.transformers.visualTransforms
+import me.rerere.rikkahub.data.ai.tools.buildKnowledgeTools
 import me.rerere.rikkahub.data.ai.tools.buildMemoryTools
 import me.rerere.rikkahub.data.datastore.Settings
 import me.rerere.rikkahub.data.datastore.findModelById
 import me.rerere.rikkahub.data.datastore.findProvider
 import me.rerere.rikkahub.data.model.Assistant
 import me.rerere.rikkahub.data.model.AssistantMemory
+import me.rerere.rikkahub.data.repository.KnowledgeRepository
 import me.rerere.rikkahub.data.repository.MemoryRepository
 import me.rerere.rikkahub.utils.applyPlaceholders
 import java.util.Locale
@@ -67,6 +69,7 @@ class GenerationHandler(
     private val providerManager: ProviderManager,
     private val json: Json,
     private val memoryRepo: MemoryRepository,
+    private val knowledgeRepo: KnowledgeRepository? = null,
 ) {
     fun generateText(
         settings: Settings,
@@ -112,6 +115,17 @@ class GenerationHandler(
                             memoryRepo.deleteMemory(id)
                         }
                     ).let(this::addAll)
+                }
+                
+                // 知识库工具：当助手启用了知识库或全局启用了知识库时
+                val knowledgeEnabled = assistant?.localTools?.any { it is LocalToolOption.KnowledgeBase } == true
+                if (knowledgeEnabled && knowledgeRepo != null) {
+                    val knowledgeAssistantId = if (assistant?.useGlobalMemory == true) {
+                        KnowledgeRepository.GLOBAL_KNOWLEDGE_ID
+                    } else {
+                        assistant?.id?.toString() ?: KnowledgeRepository.GLOBAL_KNOWLEDGE_ID
+                    }
+                    buildKnowledgeTools(json, knowledgeRepo, knowledgeAssistantId).let(this::addAll)
                 }
                 addAll(tools)
             }
