@@ -13,6 +13,7 @@ import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.*
 import me.rerere.rikkahub.R
 import me.rerere.rikkahub.data.model.KnowledgeItem
+import me.rerere.rikkahub.data.repository.KnowledgeRepository
 import me.rerere.rikkahub.ui.components.nav.BackButton
 import org.koin.androidx.compose.koinViewModel
 

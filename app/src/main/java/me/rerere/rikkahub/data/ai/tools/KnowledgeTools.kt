@@ -119,7 +119,7 @@ fun buildKnowledgeTools(
         name = "knowledge_list_categories",
         description = "列出知识库中的所有分类和对应的条目数量",
         parameters = {
-            InputSchema.Obj(emptyJsonObject())
+            InputSchema.Obj(emptyJsonObject)
         },
         execute = {
             val categories = repository.getCategories(assistantId)
@@ -136,7 +136,7 @@ fun buildKnowledgeTools(
         name = "knowledge_list_tags",
         description = "列出知识库中的所有标签",
         parameters = {
-            InputSchema.Obj(emptyJsonObject())
+            InputSchema.Obj(emptyJsonObject)
         },
         execute = {
             val tags = repository.getTags(assistantId)
