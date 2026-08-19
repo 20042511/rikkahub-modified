@@ -19,18 +19,6 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Set up Android JDK
-        run: |
-          echo "JAVA_HOME=$JAVA_HOME" >> $GITHUB_ENV
-          # 禁用 Gradle 自动下载 toolchain，使用已安装的 JDK
-          echo "org.gradle.java.installations.auto-detect=false" >> gradle.properties
-          echo "org.gradle.java.installations.auto-download=false" >> gradle.properties
-
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 11
-
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
